@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>山熊科學數位聯絡簿</title>
     
-    <link rel="apple-touch-icon" href="icon.png">
-    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="https://妳的帳號.github.io/repo名/icon.png">
+    <link rel="icon" type="image/png" href="https://妳的帳號.github.io/repo名/icon.png">
 
     <style>
         body {
@@ -22,29 +22,20 @@
             padding: 20px;
         }
         
-        /* Logo 設定 */
         .logo {
             width: 150px;
             height: 150px;
             border-radius: 28px;
             margin-bottom: 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            /* 確保圖片不會被意外隱藏 */
+            display: block; 
         }
 
-        /* 標題 (只在 Safari 顯示) */
-        #welcome-title { 
-            font-size: 24px; 
-            color: #333; 
-            margin-bottom: 10px; 
-        }
+        #welcome-title { font-size: 24px; color: #333; margin-bottom: 10px; }
         
-        /* 狀態文字的基礎設定 */
-        #status-text {
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
+        #status-text { margin-bottom: 20px; line-height: 1.4; }
 
-        /* 說明區塊 (只在 Safari 顯示) */
         #instruction-block {
             font-size: 19px;
             color: #444;
@@ -53,7 +44,6 @@
             font-weight: 500;
         }
         
-        /* 按鈕 (只在 Safari 顯示) */
         #entry-btn {
             background-color: #007AFF;
             color: white;
@@ -63,29 +53,26 @@
             font-weight: bold;
             font-size: 18px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: inline-block; /* 預設顯示 */
         }
-
-        /* --- 特殊狀態樣式 --- */
 
         /* 情況A：跳轉中的超大字樣式 */
         .redirecting-style {
-            font-size: 32px;        /* 字體超大 */
-            color: #007AFF;         /* 科技藍 */
-            font-weight: 700;       /* 粗體 */
+            font-size: 32px;
+            color: #007AFF;
+            font-weight: 700;
             margin-top: 20px;
-            animation: pulse 1.5s infinite; /* 呼吸燈快一點 */
+            animation: pulse 1.5s infinite;
         }
 
         /* 情況B：引導操作的醒目樣式 */
         .alert-style {
-            font-size: 26px;        /* 夠大 */
-            color: #FF3B30;         /* 蘋果警示紅/橘色 */
-            font-weight: 800;       /* 特粗 */
+            font-size: 26px;
+            color: #FF3B30; 
+            font-weight: 800;
             padding: 10px;
-            border: 2px dashed #FF3B30; /* 加個虛線框更醒目 */
+            border: 2px dashed #FF3B30;
             border-radius: 10px;
-            background-color: rgba(255, 59, 48, 0.05); /* 淡淡的紅色背景 */
+            background-color: rgba(255, 59, 48, 0.05);
         }
 
         @keyframes pulse {
@@ -97,10 +84,9 @@
 </head>
 <body>
 
-    <img src="icon.png" alt="山熊科學" class="logo">
+    <img src="https://github.com/neatnelson/sciencebear/blob/cabf5c71ede4de41ff5e64114c87cc44d4c1f0f9/icon.png" alt="山熊科學" class="logo">
     
     <h1 id="welcome-title">歡迎使用山熊科學數位聯絡簿</h1>
-    
     <div id="status-text">載入中...</div>
     
     <div id="instruction-block">
@@ -111,39 +97,33 @@
     <a id="entry-btn" href="https://script.google.com/macros/s/AKfycbxCfMDh2-Z2PklcsWHEbpTAdapnCIGb7Np09jO7HiaJcIWKmcyu2tlz60krwcvVR-pu/exec">進入系統</a>
 
     <script>
-        // 取得頁面上的元素
         const title = document.getElementById('welcome-title');
         const statusText = document.getElementById('status-text');
         const instruction = document.getElementById('instruction-block');
         const btn = document.getElementById('entry-btn');
         const targetUrl = "https://script.google.com/macros/s/AKfycbxCfMDh2-Z2PklcsWHEbpTAdapnCIGb7Np09jO7HiaJcIWKmcyu2tlz60krwcvVR-pu/exec";
 
-        // 判斷是否為 Standalone (App模式)
         const isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
 
         if (isStandalone) {
-            // 【情況 A：已經是 App 模式】
-            
-            // 1. 隱藏不需要的雜訊
+            // 【App 模式】
             title.style.display = 'none';
             instruction.style.display = 'none';
             btn.style.display = 'none';
 
-            // 2. 設定狀態文字為「超大跳轉中」
             statusText.innerText = '即將自動跳轉⋯⋯';
-            statusText.className = 'redirecting-style'; // 套用 CSS 裡的超大樣式
+            statusText.className = 'redirecting-style';
 
-            // 3. 執行跳轉
-            window.location.replace(targetUrl);
+            // 【新功能】設定延遲 800 毫秒 (0.8秒) 後再跳轉
+            // 讓使用者有時間看到 Logo 和文字，體驗比較好，也不會破圖
+            setTimeout(function() {
+                window.location.replace(targetUrl);
+            }, 800);
 
         } else {
-            // 【情況 B：還在 Safari 瀏覽器】
-
-            // 1. 設定狀態文字為「醒目提示」
+            // 【Safari 瀏覽器模式】
             statusText.innerText = '請依照下方指示操作';
-            statusText.className = 'alert-style'; // 套用 CSS 裡的紅色醒目樣式
-            
-            // 其他元素保持原樣顯示，讓家長看說明
+            statusText.className = 'alert-style';
         }
     </script>
 
